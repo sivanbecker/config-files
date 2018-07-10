@@ -1,89 +1,23 @@
-[alias]
-    br = branch -vv --sort=-committerdate
-    co = checkout
-    ci = commit -v
-    dc = diff --cached
-    ds = diff --stat
-    dw = diff --color-words
-    fix = commit --amend --no-edit
-    flush = !git add -A && git commit -m flush && git reset --hard HEAD@{1}
-    l = log --graph
-    la = log --graph --all
-    lgg = log --walk-reflogs --decorate --pretty=oneline --abbrev-commit
-    lg = log --graph
-    lo = log --graph @{upstream}..
-    lgs = log --graph --stat
-    lp = log --patch
-    lpw = log --patch --color-words
-    ls = log --stat
-    pr = !git co master && git pull && git co @{-1} && git rb master
-    ri = rebase -i
-    st = status
-    unstage = reset --
-
-[color "diff"]
-    old = red bold
-    new = blue bold
-    frag = magenta bold
-
-[format]
-    pretty = format:%C(auto)%h%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset
-
-[core]
-    pager = less -F
-    sparseCheckout = true
-    untrackedCache = true
-    excludesfile = ~/.gitignore_global
-
-[protocol]
-    version = 2
-
-[credential]
-    helper = store
-
-[commit]
-    verbose = true
-
-[pager]
-    log = diff-highlight | less -F
-    show = diff-highlight | less -F
-    diff = diff-highlight | less -F
-
-[diff]
-    colorMoved = true
-    renamelimit = 0
-    renames = copy
-    ignoreSubmodules = dirty
-
-[merge]
-    conflictstyle = diff3
-
-[log]
-    date = format:%a %F %T
-
-[status]
-    branch = true
-    short = true
-
-[rebase]
-    autosquash = true
-    autostash = true
-    stat = true
-
-[fetch]
-    prune = true
-
-[pull]
-    ff = only
-
-[push]
-    followTags = true
-
-[interactive]
-    diffFilter = diff-highlight
-
 [user]
-    useConfigOnly = true
-
-[tig]
-    line-graphics = utf-8
+	email = sbecker@infinidat.com
+	name = Sivan Becker
+[branch]
+	autosetuprebase = always
+[color]
+	ui = true
+[alias]
+    fix = commit --amend --no-edit
+    propose = !git push origin +HEAD:$USER/$(git-symbolic-ref --short HEAD)
+    unpropose = !git push origin +:$USER/$(git-symbolic-ref --short HEAD)
+          br = branch -vv --sort=-committerdate
+    lo = !git lg @{upstream}..
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)%cn%Creset' --abbrev-commit --date=relative
+    search = !"search() { git branch -l | grep $@; }; search"
+    store = !git branch garage/$(git-symbolic-ref --short HEAD)/archived_$(date +%Y_%m_%d)
+    freeze = !git branch tmp/$(git-symbolic-ref --short HEAD)/archived_$(date +%Y-%m-%d__%H-%M)
+    unfreeze = !git branch -D $(git branch -l | grep tmp/$(git-symbolic-ref --short HEAD))
+    cached = diff --cached
+    last = !"last_commits() { git lg -$@; }; last_commits"
+    flush   = !git add -A && git commit -m "flush" && git reset --hard HEAD@{1}
+[core]
+	editor = /usr/bin/vim

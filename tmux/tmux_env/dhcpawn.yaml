@@ -1,0 +1,124 @@
+session_name: dhcpawn
+windows:
+######################################
+- layout: tiled
+  options:
+    automatic-rename: 'off'
+  start_directory: $HOME/envs/dhcpawn/dhcpawn
+  panes:
+  - shell_command: source ../.env3/bin/activate
+  - focus: 'true'
+    shell_command:
+      - source ../.env3/bin/activate
+      - _DHCPAWN_LOG_LEVEL=10 COB_DATABASE_URI='postgresql+psycopg2://127.0.0.1/dhcpawn' cob testserver -p 8000  
+  - shell_command:
+      - source ../.env3/bin/activate
+      - _DHCPAWN_LOG_LEVEL=10 COB_DATABASE_URI='postgresql+psycopg2://127.0.0.1/dhcpawn' cob celery start-worker
+  - shell_command:
+      - ssh sb-ldap
+      - docker logs openldap_ldap_1
+  window_name: main local
+  ######################################
+- layout: even-vertical
+  options:
+    automatic-rename: 'off'
+  panes:
+  - focus: 'true'
+    shell_command:
+      - source ../.env3/bin/activate
+      - sudo rabbitmq-server
+  - shell_command:
+      - source ../.env3/bin/activate
+  start_directory: /home/archhome/envs/dhcpawn/dhcpawn
+  window_name: rabbitmq
+  ######################################
+- layout: even-vertical
+  options:
+    automatic-rename: 'off'
+  panes:
+  - focus: 'true'
+    shell_command:
+      - source ../.env3/bin/activate
+      - ssh dhcpawn
+      - docker ps
+  - shell_command:
+      - source ../.env3/bin/activate
+      - ssh dhcpawn
+      - tail -f /var/log/syslog
+  start_directory: /home/archhome/envs/dhcpawn/dhcpawn
+  window_name: dhcpawn server
+#######################################
+- layout: even-horizontal
+  options:
+    automatic-rename: 'off'
+  panes:
+  - focus: 'true'
+    shell_command:
+      - source ../.env3/bin/activate
+      - ssh sb-ldap
+      - docker ps
+  start_directory: $HOME/envs/dhcpawn/dhcpawn
+  window_name: sb-ldap1
+  ######################################
+- layout: even-horizontal
+  options:
+    automatic-rename: 'off'
+  panes:
+  - focus: 'true'
+    shell_command:
+      - source ../.env3/bin/activate
+      - ssh sb-ldap
+      - docker ps
+  start_directory: $HOME/envs/dhcpawn/dhcpawn
+  window_name: sb-ldap2
+  ######################################
+- layout: even-horizontal
+  options:
+    automatic-rename: 'off'
+  panes:
+  - focus: 'true'
+    shell_command:
+      - source ../.env3/bin/activate
+      - pgcli dhcpawn
+  start_directory: $HOME/envs/dhcpawn/dhcpawn
+  window_name: pgcli
+  ######################################
+- layout: even-horizontal
+  options:
+    automatic-rename: 'off'
+  panes:
+  - focus: 'true'
+    shell_command: source ../.env3/bin/activate
+  start_directory: $HOME/envs/dhcpawn/dhcpawn
+  window_name: sudo
+  ######################################
+- layout: even-horizontal
+  options:
+    automatic-rename: 'off'
+  panes:
+  - pane
+  start_directory: $HOME/envs/dhcpawn/dhcpawn
+  window_name: python
+  ######################################
+- layout: even-horizontal
+  options:
+    automatic-rename: 'off'
+  panes:
+  - focus: 'true'
+    shell_command: 
+      - source ../.env3/bin/activate
+  start_directory: $HOME/envs/dhcpawn/data
+  window_name: zsh
+
+  ######################################
+- layout: even-horizontal
+  options:
+    automatic-rename: 'off'
+  panes:
+  - focus: 'true'
+    shell_command: 
+      - source ../.env3/bin/activate
+      - jupyter notebook --notebook-dir=~/notebooks
+      
+  start_directory: $HOME/envs/dhcpawn/data
+  window_name: jupyter
