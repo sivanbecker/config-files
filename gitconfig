@@ -4,7 +4,19 @@
 [branch]
 	autosetuprebase = always
 [color]
-	ui = true
+    old = red bold
+    new = blue bold
+    frag = magenta bold
+
+[log]
+    date = format:%a %F %T
+
+[diff]
+    colorMoved = true
+    renamelimit = 0
+    renames = copy
+    ignoreSubmodules = dirty
+
 [alias]
     fix = commit --amend --no-edit
     propose = !git push origin +HEAD:$USER/$(git-symbolic-ref --short HEAD)

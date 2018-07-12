@@ -133,14 +133,14 @@ alias crontab="export EDITOR=/usr/bin/vim;crontab"
 # new iterm default venv ( python 3.5 )
 #envs
 #source .default_env_3/bin/activate
-enter_tmux_for_new_term () {
-if [ -z ${TMUX} ]; then
-	echo ">>> ALREADY IN TMUX SESSION";
-	start newterm;
-fi
-}
+#enter_tmux_for_new_term () {
+#if [ -z ${TMUX} ]; then
+#	echo ">>> ALREADY IN TMUX SESSION";
+#	start newterm;
+#fi
+#}
 
-enter_tmux_for_new_term
+#enter_tmux_for_new_term
 
 p3 () {
 envs
