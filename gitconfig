@@ -33,3 +33,5 @@
     flush   = !git add -A && git commit -m "flush" && git reset --hard HEAD@{1}
 [core]
 	editor = /usr/bin/vim
+[github]
+	user = sbecker
